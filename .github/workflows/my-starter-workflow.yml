@@ -5,9 +5,12 @@ on:
     branches: [ main ]
 
 jobs:
-  # 其他已存在的作业（如果有）
-  
-  call-reusable-workflow:  # 新作业名称，可自定义
-    uses: ./.github/workflows/reusable-workflow.yml  # 指定可重用工作流路径
+  call-reusable-workflow:
+    strategy:
+      matrix:
+        nodeversion: [14, 16, 18, 20]  # 定义要测试的Node.js版本列表
+    
+    # 调用可重用工作流，并传递矩阵变量
+    uses: ./.github/workflows/reusable-workflow.yml
     with:
-      node: 14  # 传递必需的node参数，值为"14"
+      node: ${{ matrix.nodeversion }}  # 动态传递当前矩阵变量值
