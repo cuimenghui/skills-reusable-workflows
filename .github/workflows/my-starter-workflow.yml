@@ -1,16 +1,13 @@
 name: My Starter Workflow
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy to your project.
+  # 其他已存在的作业（如果有）
+  
+  call-reusable-workflow:  # 新作业名称，可自定义
+    uses: ./.github/workflows/reusable-workflow.yml  # 指定可重用工作流路径
+    with:
+      node: 14  # 传递必需的node参数，值为"14"
